@@ -1,0 +1,4 @@
+# This file is overlaid into the release as config/production.yaml.
+# Keep only non-secret application configuration here.
+log_level: info
+feature_flags: []

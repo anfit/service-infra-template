@@ -1,0 +1,11 @@
+# Replace the alias and user with values for your own host.
+name: prod
+ssh:
+  host: prod-vps
+  user: deploy
+  # For deployments that require privileged reconciliation, configure a
+  # dedicated forced-command identity. Remove these fields if unused.
+  privileged_host: prod-vps
+  privileged_user: root
+  privileged_identity_file: ~/.ssh/prod-vps-deployer
+managed_root: /srv/vps-deployer

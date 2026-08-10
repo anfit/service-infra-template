@@ -1,0 +1,46 @@
+name: example-service-prod
+host: prod
+
+service:
+  user: svc-example
+
+release:
+  source: ${PROJECTS_DIR}/example-service
+  include:
+    - source: ${SERVICE_INFRA_DIR}/configs/example-service/prod.yaml
+      target: config/production.yaml
+
+runtime:
+  command: ./run-managed.sh
+  working_directory: .
+  restart: always
+
+# Ordinary configuration is safe to commit. Use globals only when a value is
+# genuinely shared by multiple deployments.
+environment:
+  APP_ENV: production
+  APP_BIND: 127.0.0.1:8100
+  APP_DATA_DIR: /var/lib/example-service
+
+# Only the variable name is committed. Apply reads its value from the local
+# process environment and does not place it in the release artifact.
+secrets:
+  API_TOKEN:
+    from_env: EXAMPLE_SERVICE_PROD_API_TOKEN
+
+storage:
+  data:
+    path: /var/lib/example-service
+
+healthcheck:
+  type: http
+  url: http://127.0.0.1:8100/health
+
+# Certificates must already exist on the host. For a trusted-network HTTP-only
+# service, set tls: false and remove certificate and certificate_key.
+http_proxy:
+  name: example-service-prod
+  domain: service.example.com
+  upstream: http://127.0.0.1:8100
+  certificate: /etc/letsencrypt/live/service.example.com/fullchain.pem
+  certificate_key: /etc/letsencrypt/live/service.example.com/privkey.pem
