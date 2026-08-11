@@ -36,7 +36,7 @@ inspect its plan and the `vps-deployer` operations documentation first.
 ## Normal changes
 
 1. Confirm the intended application branch, commit, and clean working tree.
-2. Ensure the application `.vps-deployer-ignore` excludes local credentials and
+2. Ensure the application `.deployer/ignore.txt` excludes local credentials and
    development-only files.
 3. Run `validate`, then review `plan`.
 4. Run `apply`, then `status`.

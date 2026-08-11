@@ -24,6 +24,12 @@ through the operator's environment.
 Continue with [the operator guide](docs/operator-guide.md). For the complete
 schema and security model, see the `vps-deployer` documentation.
 
+The corresponding application artifact should provide an executable
+`.deployer/run.sh`, an optional `.deployer/ignore.txt`, and, when needed,
+read-only host assumptions in `.deployer/expect.yaml`. The default runtime
+command uses `.deployer/run.sh`, so ordinary manifests do not repeat that
+application-owned path.
+
 ## Repository layout
 
 ```text
