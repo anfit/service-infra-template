@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 # Files that should be identical in the instance and the template.
-GENERIC = [".gitignore", "tools/check-template-parity.py"]
+GENERIC = [".gitignore", "tools/check-template-parity.py", "tools/update-services-doc.py"]
 # Files that exist in both but are expected to differ (instance data).
 EXPECTED_DIFF = ["README.md", "hosts/prod.yaml"]
 # Top-level areas whose files are instance data by nature.

@@ -24,7 +24,11 @@ through the operator's environment.
    ```powershell
    vps-deployer validate
    vps-deployer secrets check
+   vps-deployer list
    ```
+
+8. Refresh the generated inventory in `docs/services.md` after changing
+   deployments: `python tools/update-services-doc.py`.
 
 Continue with [the operator guide](docs/operator-guide.md). For the complete
 schema and security model, see the `vps-deployer` documentation.
@@ -39,7 +43,7 @@ application-owned path.
 
 ```text
 hosts/                         # SSH identity and managed root per host
-tools/                         # helper scripts (template parity check)
+tools/                         # helper scripts (parity check, services.md generator)
 deployments/                   # desired state, grouped by application
 configs/                       # optional committed, non-secret app config
 globals/                       # optional shared, non-secret values
