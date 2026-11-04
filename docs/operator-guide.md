@@ -18,10 +18,12 @@ a last line of defense.
 
 ## First deployment
 
-From any directory, select this repository explicitly:
+From any directory, select this repository explicitly (or omit `--repo` when
+`SERVICE_INFRA_DIR` is set):
 
 ```powershell
 vps-deployer --repo $env:SERVICE_INFRA_DIR validate
+vps-deployer --repo $env:SERVICE_INFRA_DIR secrets check
 vps-deployer --repo $env:SERVICE_INFRA_DIR host inspect prod
 vps-deployer --repo $env:SERVICE_INFRA_DIR host onboard prod
 vps-deployer --repo $env:SERVICE_INFRA_DIR plan example-service-prod
@@ -52,6 +54,18 @@ vps-deployer --repo $env:SERVICE_INFRA_DIR rollback example-service-prod
 
 Rollback activates the retained predecessor release. It does not modify desired
 state in this repository. Reconcile the manifest or application source afterward.
+
+## Common failures
+
+- **`secret environment variables not set`**: run `secrets check`; a terminal
+  opened before you set a persistent variable will not see it.
+- **`runtime executable is missing from release`**: the application lacks an
+  executable `.deployer/run.sh`, or `.deployer/ignore.txt` excludes it.
+- **Health check failed; previous release restored**: inspect `logs`. Typical
+  causes are CRLF line endings or a bad shebang in shell scripts (enforce LF
+  with `.gitattributes`), a missing runtime dependency, or a port collision.
+- **Plan keeps proposing changes after `apply`**: a manual `rollback` does not
+  change desired state, so the plan proposes reactivating the desired release.
 
 ## Before publishing changes
 

@@ -13,12 +13,17 @@ through the operator's environment.
 1. Create a **private** repository from this template and clone it.
 2. Replace the placeholder values in `hosts/prod.yaml`.
 3. Rename and adapt `deployments/example-service/prod.yaml`.
-4. Set `PROJECTS_DIR` and `SERVICE_INFRA_DIR` to absolute local paths.
-5. Set every environment variable referenced by `secrets.*.from_env`.
-6. Validate before connecting to a host:
+4. Install the tool: `pipx install git+https://github.com/anfit/vps-deployer`.
+5. Set `PROJECTS_DIR` and `SERVICE_INFRA_DIR` to absolute local paths. With
+   `SERVICE_INFRA_DIR` set, `vps-deployer` finds this repository from any
+   directory, so `--repo` is optional.
+6. Set every environment variable referenced by `secrets.*.from_env`; the names
+   are listed in `.env.example`. Keep that file in step with the manifests.
+7. Validate before connecting to a host:
 
    ```powershell
-   vps-deployer --repo $env:SERVICE_INFRA_DIR validate
+   vps-deployer validate
+   vps-deployer secrets check
    ```
 
 Continue with [the operator guide](docs/operator-guide.md). For the complete
@@ -34,10 +39,21 @@ application-owned path.
 
 ```text
 hosts/                         # SSH identity and managed root per host
+tools/                         # helper scripts (template parity check)
 deployments/                   # desired state, grouped by application
 configs/                       # optional committed, non-secret app config
 globals/                       # optional shared, non-secret values
 docs/                          # operator-specific documentation
+```
+
+## Staying in sync with a derived repository
+
+If you keep a private instance derived from this template, mirror generic
+changes (docs, tooling, layout) in both. `tools/check-template-parity.py`
+compares the two checkouts and reports only unexpected drift:
+
+```powershell
+python tools/check-template-parity.py --instance <your infra repo> --template <this repo>
 ```
 
 ## Security boundary
