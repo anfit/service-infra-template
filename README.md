@@ -13,7 +13,7 @@ through the operator's environment.
 1. Create a **private** repository from this template and clone it.
 2. Replace the placeholder values in `hosts/prod.yaml`.
 3. Rename and adapt `deployments/example-service/prod.yaml`.
-4. Install the tool: `pipx install git+https://github.com/anfit/vps-deployer`.
+4. Install the tool: `pipx install vps-deployer`.
 5. Set `PROJECTS_DIR` and `SERVICE_INFRA_DIR` to absolute local paths. With
    `SERVICE_INFRA_DIR` set, `vps-deployer` finds this repository from any
    directory, so `--repo` is optional.
