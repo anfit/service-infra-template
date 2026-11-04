@@ -21,7 +21,14 @@ where each variable resolves:
 ```powershell
 vps-deployer secrets set EXAMPLE_SERVICE_PROD_API_TOKEN   # prompts; add --store keyring for the OS store
 vps-deployer secrets sources
+vps-deployer secrets list                     # every source holding each variable, plus leftovers
+vps-deployer secrets rotate NAME               # new value, then which deployments to re-apply
+vps-deployer secrets unset NAME                # delete a stored value
 ```
+
+Stored values are per user and per machine and readable by any process you run;
+keep your password manager as the source of truth. After rotating, `apply` each
+deployment that `rotate` names.
 
 On Linux or macOS, export the same variables with POSIX paths. Keep secrets in a
 secret manager or protected user environment; `.env` files are ignored only as
